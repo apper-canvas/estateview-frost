@@ -58,8 +58,8 @@ const Browse = () => {
         property.title.toLowerCase().includes(search) ||
         property.address.toLowerCase().includes(search) ||
         property.city.toLowerCase().includes(search) ||
-        property.state.toLowerCase().includes(search) ||
-        property.zipCode.includes(search) ||
+property.state.toLowerCase().includes(search) ||
+        property.zip_code.includes(search) ||
         property.Id.toString().includes(search)
       )
     }
@@ -71,8 +71,8 @@ const Browse = () => {
     if (filters.priceMax) {
       filtered = filtered.filter(property => property.price <= parseInt(filters.priceMax))
     }
-    if (filters.propertyTypes.length > 0) {
-      filtered = filtered.filter(property => filters.propertyTypes.includes(property.propertyType))
+if (filters.propertyTypes.length > 0) {
+      filtered = filtered.filter(property => filters.propertyTypes.includes(property.property_type))
     }
     if (filters.bedroomsMin > 0) {
       filtered = filtered.filter(property => property.bedrooms >= filters.bedroomsMin)
@@ -80,11 +80,11 @@ const Browse = () => {
     if (filters.bathroomsMin > 0) {
       filtered = filtered.filter(property => property.bathrooms >= filters.bathroomsMin)
     }
-    if (filters.squareFeetMin) {
-      filtered = filtered.filter(property => property.squareFeet >= parseInt(filters.squareFeetMin))
+if (filters.squareFeetMin) {
+      filtered = filtered.filter(property => property.square_feet >= parseInt(filters.squareFeetMin))
     }
     if (filters.yearBuiltMin) {
-      filtered = filtered.filter(property => property.yearBuilt >= parseInt(filters.yearBuiltMin))
+      filtered = filtered.filter(property => property.year_built >= parseInt(filters.yearBuiltMin))
     }
 
     // Apply sorting
@@ -94,13 +94,14 @@ const Browse = () => {
           return a.price - b.price
         case 'price-high':
           return b.price - a.price
-        case 'newest':
-          return new Date(b.listingDate) - new Date(a.listingDate)
+case 'newest':
+          return new Date(b.listing_date) - new Date(a.listing_date)
         case 'oldest':
-          return new Date(a.listingDate) - new Date(b.listingDate)
+          return new Date(a.listing_date) - new Date(b.listing_date)
         case 'sqft-high':
-          return b.squareFeet - a.squareFeet
+          return b.square_feet - a.square_feet
         case 'sqft-low':
+          return a.square_feet - b.square_feet
           return a.squareFeet - b.squareFeet
         default:
           return 0

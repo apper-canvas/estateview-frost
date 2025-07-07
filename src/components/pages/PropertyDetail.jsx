@@ -72,7 +72,7 @@ const PropertyDetail = () => {
     )
   }
 
-  const isSaved = savedProperties.some(saved => saved.propertyId === parseInt(id))
+const isSaved = savedProperties.some(saved => saved.property_id === parseInt(id))
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-US', {
@@ -124,9 +124,9 @@ const PropertyDetail = () => {
                     className="text-sm font-medium"
                   >
                     {property.status}
-                  </Badge>
+</Badge>
                   <span className="text-sm text-gray-600">
-                    Listed on {formatDate(property.listingDate)}
+                    Listed on {formatDate(property.listing_date)}
                   </span>
                 </div>
                 
@@ -134,18 +134,18 @@ const PropertyDetail = () => {
                   {property.title}
                 </h1>
                 
-                <p className="text-lg text-gray-600 mb-4">
-                  {property.address}, {property.city}, {property.state} {property.zipCode}
+<p className="text-lg text-gray-600 mb-4">
+                  {property.address}, {property.city}, {property.state} {property.zip_code}
                 </p>
                 
                 <div className="text-4xl font-display font-bold text-primary mb-4">
                   {formatPrice(property.price)}
                 </div>
                 
-                <PropertyStats
+<PropertyStats
                   bedrooms={property.bedrooms}
                   bathrooms={property.bathrooms}
-                  squareFeet={property.squareFeet}
+                  squareFeet={property.square_feet}
                 />
               </div>
               
@@ -211,12 +211,12 @@ const PropertyDetail = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Property Type</span>
-                  <span className="font-medium">{property.propertyType}</span>
+<span className="text-gray-600">Property Type</span>
+                  <span className="font-medium">{property.property_type}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Year Built</span>
-                  <span className="font-medium">{property.yearBuilt}</span>
+                  <span className="font-medium">{property.year_built}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Bedrooms</span>
@@ -228,23 +228,23 @@ const PropertyDetail = () => {
                 </div>
               </div>
               <div className="space-y-3">
-                <div className="flex justify-between">
+<div className="flex justify-between">
                   <span className="text-gray-600">Square Feet</span>
-                  <span className="font-medium">{property.squareFeet.toLocaleString()}</span>
+                  <span className="font-medium">{property.square_feet.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Price per Sq Ft</span>
                   <span className="font-medium">
-                    ${Math.round(property.price / property.squareFeet)}
+                    ${Math.round(property.price / property.square_feet)}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Status</span>
                   <span className="font-medium">{property.status}</span>
                 </div>
-                <div className="flex justify-between">
+<div className="flex justify-between">
                   <span className="text-gray-600">Listed Date</span>
-                  <span className="font-medium">{formatDate(property.listingDate)}</span>
+                  <span className="font-medium">{formatDate(property.listing_date)}</span>
                 </div>
               </div>
             </div>

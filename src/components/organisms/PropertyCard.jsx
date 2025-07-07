@@ -9,8 +9,8 @@ import ApperIcon from '@/components/ApperIcon'
 import { useSavedProperties } from '@/hooks/useSavedProperties'
 
 const PropertyCard = ({ property, className }) => {
-  const { savedProperties, toggleSavedProperty } = useSavedProperties()
-  const isSaved = savedProperties.some(saved => saved.propertyId === property.Id)
+const { savedProperties, toggleSavedProperty } = useSavedProperties()
+  const isSaved = savedProperties.some(saved => saved.property_id === property.Id)
 
   const handleSaveToggle = (e) => {
     e.preventDefault()
@@ -85,8 +85,8 @@ const PropertyCard = ({ property, className }) => {
             <h3 className="text-2xl font-display font-bold text-gray-900 mb-1">
               {formatPrice(property.price)}
             </h3>
-            <p className="text-sm text-gray-600">
-              {property.address}, {property.city}, {property.state} {property.zipCode}
+<p className="text-sm text-gray-600">
+              {property.address}, {property.city}, {property.state} {property.zip_code}
             </p>
           </div>
           
@@ -96,22 +96,22 @@ const PropertyCard = ({ property, className }) => {
           </h4>
           
           {/* Property Stats */}
-          <PropertyStats
+<PropertyStats
             bedrooms={property.bedrooms}
             bathrooms={property.bathrooms}
-            squareFeet={property.squareFeet}
+            squareFeet={property.square_feet}
             className="mb-4"
           />
           
           {/* Property Type & Year */}
           <div className="flex items-center justify-between text-sm text-gray-600">
-            <span className="flex items-center gap-1">
+<span className="flex items-center gap-1">
               <ApperIcon name="Building" className="h-3 w-3" />
-              {property.propertyType}
+              {property.property_type}
             </span>
             <span className="flex items-center gap-1">
               <ApperIcon name="Calendar" className="h-3 w-3" />
-              Built {property.yearBuilt}
+              Built {property.year_built}
             </span>
           </div>
         </div>

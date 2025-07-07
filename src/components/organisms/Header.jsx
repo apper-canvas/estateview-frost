@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { motion } from 'framer-motion'
 import { cn } from '@/utils/cn'
 import Button from '@/components/atoms/Button'
 import ApperIcon from '@/components/ApperIcon'
+import { AuthContext } from '@/App'
 
 const Header = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const location = useLocation()
+  const { user, isAuthenticated } = useSelector((state) => state.user)
+  const { logout } = useContext(AuthContext)
 
   const navigation = [
     { name: 'Browse Properties', href: '/', icon: 'Home' },
@@ -15,6 +19,10 @@ const Header = () => {
   ]
 
   const isActive = (path) => location.pathname === path
+
+  const handleLogout = async () => {
+    await logout()
+  }
 
   return (
     <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200">
@@ -30,37 +38,68 @@ const Header = () => {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={cn(
-                  "flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200",
-                  isActive(item.href)
-                    ? "text-primary bg-primary/10"
-                    : "text-gray-600 hover:text-primary hover:bg-primary/5"
-                )}
-              >
-                <ApperIcon name={item.icon} className="h-4 w-4" />
-                <span>{item.name}</span>
-              </Link>
-            ))}
-          </nav>
+{/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            <nav className="flex items-center space-x-8">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={cn(
+                    "flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200",
+                    isActive(item.href)
+                      ? "text-primary bg-primary/10"
+                      : "text-gray-600 hover:text-primary hover:bg-primary/5"
+                  )}
+                >
+                  <ApperIcon name={item.icon} className="h-4 w-4" />
+                  <span>{item.name}</span>
+                </Link>
+              ))}
+            </nav>
+            
+            {/* User Actions */}
+            {isAuthenticated && (
+              <div className="flex items-center space-x-4">
+                <span className="text-sm text-gray-600">
+                  Welcome, {user?.firstName || 'User'}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="text-sm"
+                >
+                  <ApperIcon name="LogOut" className="h-4 w-4 mr-2" />
+                  Logout
+                </Button>
+              </div>
+            )}
+          </div>
 
-          {/* Mobile menu button */}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="md:hidden"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            <ApperIcon 
-              name={isMobileMenuOpen ? "X" : "Menu"} 
-              className="h-5 w-5" 
-            />
-          </Button>
+{/* Mobile menu button */}
+          <div className="md:hidden flex items-center space-x-2">
+            {isAuthenticated && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleLogout}
+                className="text-xs"
+              >
+                <ApperIcon name="LogOut" className="h-4 w-4" />
+              </Button>
+            )}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <ApperIcon 
+                name={isMobileMenuOpen ? "X" : "Menu"} 
+                className="h-5 w-5" 
+              />
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -86,8 +125,24 @@ const Header = () => {
                   <ApperIcon name={item.icon} className="h-4 w-4" />
                   <span>{item.name}</span>
                 </Link>
-              ))}
+))}
             </nav>
+            {isAuthenticated && (
+              <div className="mt-4 pt-4 border-t border-gray-200">
+                <div className="px-3 py-2 text-sm text-gray-600">
+                  Welcome, {user?.firstName || 'User'}
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="w-full justify-start text-sm mt-2"
+                >
+                  <ApperIcon name="LogOut" className="h-4 w-4 mr-2" />
+                  Logout
+                </Button>
+              </div>
+            )}
           </motion.div>
         )}
       </div>

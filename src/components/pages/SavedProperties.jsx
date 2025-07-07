@@ -26,9 +26,9 @@ const SavedProperties = () => {
         return
       }
 
-      const allProperties = await propertyService.getAll()
+const allProperties = await propertyService.getAll()
       const filtered = allProperties.filter(property => 
-        savedProperties.some(saved => saved.propertyId === property.Id)
+        savedProperties.some(saved => saved.property_id === property.Id)
       )
       
       setSavedPropertiesData(filtered)
